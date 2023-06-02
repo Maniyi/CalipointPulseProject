@@ -4,15 +4,15 @@ import requests
 import json
 from decimal import Decimal
 
+
 # Set the layout of the Streamlit application
 st.set_page_config(layout="wide")
 # Display a title for the application in HTML format
 st.markdown("<h1 style='text-align: center; color: white;'>PulseChain Token Info</h1>",
             unsafe_allow_html=True)
 
+
 # Define a function to get native balance for a given address
-
-
 def get_native_balance(addressHash):
     # API endpoint
     base_url = "https://scan.pulsechain.com/api"
@@ -29,10 +29,9 @@ def get_native_balance(addressHash):
         st.error(f"Exception occurred: {e}")
         return None
 
+
 # Define a function to get token information for a given address
 # The function is cached to prevent multiple calls for the same address
-
-
 @st.cache_data
 def get_token_info(address):
     # API endpoint
@@ -69,7 +68,10 @@ def get_token_info(address):
 
         # Add the native coin information to the results
         result.append({
-            'Name': 'PulseChain', 'Symbol': 'PLS', 'Contract Address': 'Native', 'Decimals': 18,
+            'Name': 'PulseChain',
+            'Symbol': 'PLS',
+            'Contract Address': 'Native',
+            'Decimals': 18,
             'Balance': balance_pls.quantize(Decimal('0.0000')),
             'Balance USD': balance_usd_pls.quantize(Decimal('0.00')) if price_usd_pls else 'Price not available',
         })
@@ -129,9 +131,8 @@ def get_token_info(address):
     # Return the results and the total balance in USD (rounded to 2 decimal places)
     return result, total_balance_usd.quantize(Decimal('0.00'))
 
+
 # Define a function to get the balance of a token for a given address
-
-
 def get_token_balance(contractAddressHash, addressHash):
     # API endpoint
     base_url = "https://scan.pulsechain.com/api"
@@ -149,9 +150,8 @@ def get_token_balance(contractAddressHash, addressHash):
         st.error(f"Exception occurred: {e}")
         return None
 
+
 # Define a function to get the price of a token in USD
-
-
 def get_price_usd(token_addresses):
     # API endpoint
     url = f"https://api.dexscreener.com/latest/dex/tokens/{token_addresses}"
